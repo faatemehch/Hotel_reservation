@@ -19,4 +19,4 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 
     def __str__(self):
-        return self.email
+        return str(self.id)
