@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from ckeditor.fields import RichTextField
 
 
 def get_file_name_ext(file_path):
@@ -21,8 +22,8 @@ class Hotel(models.Model):
     phone_number = models.CharField(max_length=64)
     email = models.EmailField(unique=True)
     address = models.CharField(max_length=255)
-    description = models.TextField()
-    additional_info = models.TextField()
+    description = RichTextField()
+    additional_info = RichTextField()
     star_rating = models.DecimalField(decimal_places=1, max_digits=2)
     base_price = models.DecimalField(decimal_places=2, max_digits=4)
     created_at = models.DateTimeField(auto_now_add=True)
