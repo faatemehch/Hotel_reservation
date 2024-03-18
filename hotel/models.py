@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from ckeditor.fields import RichTextField
+import os
 
 
 def get_file_name_ext(file_path):
