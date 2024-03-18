@@ -12,7 +12,7 @@ def get_file_name_ext(file_path):
 
 def upload_image_path(instance, fileName):
     _, ext = get_file_name_ext(fileName)
-    final_name = f'{instance.id}-{instance.name}.{ext}'
+    final_name = f'{instance.name}.{ext}'
     return f'hotels/{final_name}'
 
 
