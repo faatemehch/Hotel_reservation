@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from ckeditor.fields import RichTextField
 import os
 
@@ -35,7 +36,7 @@ class Hotel(models.Model):
         return str(self.name)
 
     def get_absolute_url(self):
-        return reverse("hotel", kwargs={"pk": self.slug})
+        return reverse("hotel:hotel_detail", kwargs={"slug": self.slug})
 
 
 class Room(models.Model):
