@@ -46,7 +46,7 @@ class Room(models.Model):
         ('st', 'Suit'),
     )
     hotel = models.ForeignKey(Hotel, on_delete=models.SET_NULL, null=True)
-    room_type = models.CharField(max_length=10, default=ROOM_TYPES[0][0])
+    room_type = models.CharField(max_length=10, choices=ROOM_TYPES,default=ROOM_TYPES[0][0])
     base_price = models.DecimalField(decimal_places=2, max_digits=4)
     max_occupancy = models.PositiveSmallIntegerField()  # number of guests allowed
     is_available = models.BooleanField(default=True)
