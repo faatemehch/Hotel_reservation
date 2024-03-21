@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+from taggit.managers import TaggableManager
 import os
 
 
@@ -26,6 +27,7 @@ class Hotel(models.Model):
     address = models.CharField(max_length=255)
     description = RichTextField()
     additional_info = RichTextField()
+    tags = TaggableManager() 
     star_rating = models.DecimalField(decimal_places=1, max_digits=2)
     base_price = models.DecimalField(decimal_places=2, max_digits=4)
     created_at = models.DateTimeField(auto_now_add=True)

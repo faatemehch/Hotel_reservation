@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'ckeditor',
     'debug_toolbar',
+    'taggit',
     # local apps
     'core',
     'hotel',
