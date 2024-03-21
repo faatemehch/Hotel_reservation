@@ -10,6 +10,7 @@
         <img src="{{hotel.image.url}}" width=150px height=150px>
         <br>
         <a href="{{hotel.get_absolute_url}}">{{hotel.name}}</a> - ${{hotel.base_price}} 
+        <p>rooms: {{hotel.room_set.count}}</p>
     </li>
     {% endfor %}
     </ul>
