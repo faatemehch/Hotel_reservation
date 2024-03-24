@@ -71,7 +71,7 @@ class Review(models.Model):
     modiefied_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.hotel
+        return str(self.hotel)
 
 
 class Reservation(models.Model):

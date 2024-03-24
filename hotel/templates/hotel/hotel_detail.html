@@ -9,5 +9,35 @@
   {% for tag in hotel.tags.all  %}
     <a href="#">{{ tag.name }}</a>,
   {% endfor %}
+  <h4>Rooms:</h4>
+  <table border>
+    <tr>
+      <th>row</th>
+      <th>base price</th>
+      <th>mac occupancy</th>
+      <th>Availability</th>
+      {% for room in hotel.room_set.all %}
+      </tr>
+      <th>{{ forloop.counter }}</th>
+      <th>{{ room.base_price }} $ </th>
+      <th>{{room.max_occupancy}}</th>
+      <th>{{room.is_available}}</th>
+      <tr>
+      {% endfor %}
+    </tr>
+  </table>
+  <h4>Hotel Reviews:</h4>
+  {% for comment in hotel.review_set.all %}
+    <p>
+      {{comment.writer}} | rate: {{comment.customer_rate}} <br>
+      {{comment.body}}
+    </p>
+    <hr>
+  {% endfor %}
+  <form method="POST" action=''>
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="send">
+  </form>
 </body>
 </html>
