@@ -27,7 +27,7 @@ class Hotel(models.Model):
     address = models.CharField(max_length=255)
     description = RichTextField()
     additional_info = RichTextField()
-    tags = TaggableManager() 
+    tags = TaggableManager()
     star_rating = models.DecimalField(decimal_places=1, max_digits=2)
     base_price = models.DecimalField(decimal_places=2, max_digits=4)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -40,6 +40,10 @@ class Hotel(models.Model):
     def get_absolute_url(self):
         return reverse("hotel:hotel_detail", kwargs={"slug": self.slug})
 
+    def hotel_total_rate(self):
+        reviews = self.review_set
+        return sum(review.customer_rate for review in reviews.all()) / reviews.count()
+
 
 class Room(models.Model):
     ROOM_TYPES = (
@@ -48,7 +52,8 @@ class Room(models.Model):
         ('st', 'Suit'),
     )
     hotel = models.ForeignKey(Hotel, on_delete=models.SET_NULL, null=True)
-    room_type = models.CharField(max_length=10, choices=ROOM_TYPES,default=ROOM_TYPES[0][0])
+    room_type = models.CharField(
+        max_length=10, choices=ROOM_TYPES, default=ROOM_TYPES[0][0])
     base_price = models.DecimalField(decimal_places=2, max_digits=4)
     max_occupancy = models.PositiveSmallIntegerField()  # number of guests allowed
     is_available = models.BooleanField(default=True)
@@ -80,12 +85,14 @@ class Reservation(models.Model):
         ('u', 'Un paid'),
         ('c', 'cancelled'),
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             models.SET_NULL, null=True)
     phone_number = models.CharField(max_length=46,  null=True, blank=True)
     email = models.EmailField(unique=True, null=True, blank=True)
     # hotel = models.ForeignKey(Hotel, on_delete=models.SET_NULL)
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True)
-    status = models.CharField(max_length=1, choices=RESERVATION_STATUS, default=RESERVATION_STATUS[1][0])
+    status = models.CharField(
+        max_length=1, choices=RESERVATION_STATUS, default=RESERVATION_STATUS[1][0])
 
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
@@ -93,7 +100,8 @@ class Reservation(models.Model):
     is_check_in = models.BooleanField(default=False)
     is_check_out = models.BooleanField(default=False)
 
-    guests = models.PositiveSmallIntegerField()  # PositiveSmallIntegerField: starts from  0 to 32767
+    # PositiveSmallIntegerField: starts from  0 to 32767
+    guests = models.PositiveSmallIntegerField()
 
     created_at = models.DateTimeField(auto_now_add=True)
     modiefied_at = models.DateTimeField(auto_now=True)

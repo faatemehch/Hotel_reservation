@@ -1,10 +1,11 @@
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
-    <title>Hotel List</title>
+    <title>Hotel Detail</title>
 </head>
 <body>	
-  {{hotel.name}}
+  {{hotel.name}} 
+  rate : {{hotel.hotel_total_rate|floatformat:2}}
   <h3>Tags: </h3>
   {% for tag in hotel.tags.all  %}
     <a href="#">{{ tag.name }}</a>,
