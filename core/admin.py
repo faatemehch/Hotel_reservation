@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser
+from .models import CustomUser, Contact
 
 
 class CustomUserAdmin(admin.ModelAdmin):
@@ -8,4 +8,8 @@ class CustomUserAdmin(admin.ModelAdmin):
     search_fields = ('username', 'email')
     list_display_links = ('id','username')
 
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'email', 'is_responsed')
+    
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Contact, ContactAdmin)
