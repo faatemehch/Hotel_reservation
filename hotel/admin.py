@@ -28,7 +28,8 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'writer', 'is_active')
+    list_display = ('__str__', 'writer', 'is_active', 'customer_rate')
+    list_editable = ('is_active',)
 
 
 @admin.register(Reservation)
