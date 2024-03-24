@@ -10,7 +10,7 @@ class RoomInline(admin.TabularInline):
 
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'is_active')
+    list_display = ('__str__', 'is_active', 'hotel_total_rate')
     inlines = (RoomInline, )
     search_fields = ('name',)
     prepopulated_fields = {
