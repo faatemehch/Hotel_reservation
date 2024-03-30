@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from .forms import ContactForm
 
 def home_view(request):
-    return HttpResponse("Home View")
+    return render(request, 'home.html')
 
 
 class ContactView(CreateView):

@@ -3,3 +3,4 @@ venv/
 static/
 media/
 staticfiles/
+.DS_Store
