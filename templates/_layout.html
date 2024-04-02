@@ -61,7 +61,7 @@
         <nav class="mainmenu mobile-menu">
             <ul>
                 <li class="{% if request.resolver_match.url_name == 'home_view' %}active{% endif %}"><a href="{% url 'core:home_view' %}">Home</a></li>
-                <li><a href="{% url 'hotel:hotel_list' %}">Hotels</a></li>
+                <li class="{% if request.resolver_match.url_name == 'hotel_list' %}active{% endif %}"><a href="{% url 'hotel:hotel_list' %}">Hotels</a></li>
                 <li><a href="./about-us.html">About Us</a></li>
                 <li><a href="./pages.html">Pages</a>
                     <ul class="dropdown">
@@ -139,8 +139,9 @@
                             <nav class="mainmenu">
                                 <ul>
                                     <li class="{% if request.resolver_match.url_name == 'home_view' %}active{% endif %}"><a href="{% url 'core:home_view' %}">Home</a></li>
-                                    <li><a href="{% url 'hotel:hotel_list' %}">Hotels</a></li>
+                                    <li class="{% if request.resolver_match.url_name == 'hotel_list' %}active{% endif %}"><a href="{% url 'hotel:hotel_list' %}">Hotels</a></li>
                                     <li><a href="./about-us.html">About Us</a></li>
+                                    <li class="{% if request.resolver_match.url_name == 'contact_view' %}active{% endif %}"><a href="{% url 'core:contact_view' %}">Contact</a></li>
                                     <li><a href="./pages.html">Pages</a>
                                         <ul class="dropdown">
                                             <li><a href="./room-details.html">Room Details</a></li>
@@ -149,8 +150,7 @@
                                             <li><a href="#">Premium Room</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="./blog.html">News</a></li>
-                                    <li class="{% if request.resolver_match.url_name == 'contact_view' %}active{% endif %}"><a href="{% url 'core:contact_view' %}">Contact</a></li>
+                             
                                 </ul>
                             </nav>
                             <div class="nav-right search-switch">
