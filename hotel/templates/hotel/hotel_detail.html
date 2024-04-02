@@ -1,44 +1,167 @@
-<!doctype html>
-<html class="no-js" lang="en">
-<head>
-    <title>Hotel Detail</title>
-</head>
-<body>	
-  {{hotel.name}} 
-  rate : {{hotel.hotel_total_rate|floatformat:2}}
-  <h3>Tags: </h3>
-  {% for tag in hotel.tags.all  %}
-    <a href="#">{{ tag.name }}</a>,
-  {% endfor %}
-  <h4>Rooms:</h4>
-  <table border>
-    <tr>
-      <th>row</th>
-      <th>base price</th>
-      <th>mac occupancy</th>
-      <th>Availability</th>
-      {% for room in hotel.room_set.all %}
-      </tr>
-      <th>{{ forloop.counter }}</th>
-      <th>{{ room.base_price }} $ </th>
-      <th>{{room.max_occupancy}}</th>
-      <th>{{room.is_available}}</th>
-      <tr>
-      {% endfor %}
-    </tr>
-  </table>
-  <h4>Hotel Reviews:</h4>
-  {% for comment in hotel.review_set.all %}
-    <p>
-      {{comment.writer}} | rate: {{comment.customer_rate}} <br>
-      {{comment.body}}
-    </p>
-    <hr>
-  {% endfor %}
-  <form method="POST" action=''>
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="send">
-  </form>
-</body>
-</html>
+{% extends '_layout.html' %}
+{% block title %} 
+{{ hotel.name }}
+{% endblock %}
+{% block content %} 
+      <!-- Breadcrumb Section Begin -->
+      <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Our Rooms</h2>
+                        <div class="bt-option">
+                            <a href="{% url 'hotel:hotel_list' %}">Home</a>
+                            <span>Hotels</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Room Details Section Begin -->
+    <section class="room-details-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="room-details-item">
+                        <img src="{{hotel.image.url}}" alt="">
+                        <div class="rd-text">
+                            <div class="rd-title">
+                                <h3>{{hotel.name}}</h3>
+                                <div class="rdt-right">
+                                    <div class="rating">
+                                        <i class="icon_star"></i>
+                                        <i class="icon_star"></i>
+                                        <i class="icon_star"></i>
+                                        <i class="icon_star"></i>
+                                        <i class="icon_star-half_alt"></i>
+                                    </div>
+                                    <a href="#">Booking Now</a>
+                                </div>
+                            </div>
+                            <h2>{{hotel.base_price}}$<span>/Pernight</span></h2>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="r-o">Size:</td>
+                                        <td>30 ft</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Capacity:</td>
+                                        <td>Max persion 5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Bed:</td>
+                                        <td>King Beds</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Services:</td>
+                                        <td>Wifi, Television, Bathroom,...</td>
+                                    </tr>
+                                    <tr>
+                                      <h3>Tags: </h3>
+                                        <td class="r-o">Tags:</td>
+                                        <td> {% for tag in hotel.tags.all  %}
+                                          <a href="#">{{ tag.name }}</a>,
+                                        {% endfor %}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="f-para">
+                              {{ hotel.description|safe }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="rd-reviews">
+                        <h4>Reviews</h4>
+                        {% for review in hotel.review_set.all %}
+                        <div class="review-item">
+                            <div class="ri-pic">
+                                <img src="{{hotel.image.url}}" alt="">
+                            </div>
+                            <div class="ri-text">
+                                <span>{{ review.created_at }}</span>
+                                <div class="rating">
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star-half_alt"></i>
+                                </div>
+                                <h5>{{review.writer}}</h5>
+                                <p>{{ review.body }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                  
+                    </div>
+                    <div class="review-add">
+                        <h4>Add Review</h4>
+                        <form class="ra-form" method="post">
+                          {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                  {{form.writer}}
+                                    <!-- <input type="text" placeholder="Name*"> -->
+                                </div>
+                                <!-- <div class="col-lg-6">
+                                    <input type="text" placeholder="Email*">
+                                </div> -->
+                                <div class="col-lg-12">
+                                    <div>
+                                        <h5>You Rating:</h5>
+                                        {{form.customer_rate}}
+                                        <!-- <div class="rating">
+                                            <i class="icon_star"></i>
+                                            <i class="icon_star"></i>
+                                            <i class="icon_star"></i>
+                                            <i class="icon_star"></i>
+                                            <i class="icon_star-half_alt"></i>
+                                        </div> -->
+                                    </div>
+                                    {{form.body}}
+                                    <!-- <textarea placeholder="Your Review"></textarea> -->
+                                    <button type="submit">Submit Now</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="room-booking">
+                        <h3>Your Reservation</h3>
+                        <form action="#">
+                            <div class="check-date">
+                                <label for="date-in">Check In:</label>
+                                <input type="text" class="date-input" id="date-in">
+                                <i class="icon_calendar"></i>
+                            </div>
+                            <div class="check-date">
+                                <label for="date-out">Check Out:</label>
+                                <input type="text" class="date-input" id="date-out">
+                                <i class="icon_calendar"></i>
+                            </div>
+                            <div class="select-option">
+                                <label for="guest">Guests:</label>
+                                <select id="guest">
+                                    <option value="">3 Adults</option>
+                                </select>
+                            </div>
+                            <div class="select-option">
+                                <label for="room">Room:</label>
+                                <select id="room">
+                                    <option value="">1 Room</option>
+                                </select>
+                            </div>
+                            <button type="submit">Check Availability</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Room Details Section End -->
+{% endblock %}

@@ -1,18 +1,65 @@
-<!doctype html>
-<html class="no-js" lang="en">
-<head>
-    <title>Hotel List</title>
-</head>
-<body>	
-    <ul>
-    {% for hotel in hotels  %}
-    <li>
-        <img src="{{hotel.image.url}}" width=150px height=150px>
-        <br>
-        <a href="{{hotel.get_absolute_url}}">{{hotel.name}}</a> - ${{hotel.base_price}} 
-        <p>rooms: {{hotel.room_set.count}}</p>
-    </li>
-    {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends '_layout.html' %}
+{% block title %} 
+    Hotel List
+{% endblock %}
+{% block content %}
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <h2>Our Hotels</h2>
+                        <div class="bt-option">
+                            <a href="{% url 'core:home_view' %}">Home</a>
+                            <span>Hotels</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Rooms Section Begin -->
+    <section class="rooms-section spad">
+        <div class="container">
+            <div class="row">
+                {% for hotel in hotels %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="room-item">
+                        <img src="{{ hotel.image.url }}" alt="">
+                        <div class="ri-text">
+                            <h4>{{ hotel.name }}</h4>
+                            <h3>{{hotel.base_price}}$<span>/Pernight</span></h3>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="r-o">City:</td>
+                                        <td>{{hotel.address}}</td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td class="r-o">Capacity:</td>
+                                        <td>Max persion 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Bed:</td>
+                                        <td>King Beds</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="r-o">Services:</td>
+                                        <td>Wifi, Television, Bathroom,...</td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                            <a href="{{hotel.get_absolute_url}}" class="primary-btn">More Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor%}
+            </div>
+        </div>
+    </section>
+    <!-- Rooms Section End -->
+{% endblock content %}
