@@ -62,7 +62,7 @@
             <ul>
                 <li class="{% if request.resolver_match.url_name == 'home_view' %}active{% endif %}"><a href="{% url 'core:home_view' %}">Home</a></li>
                 <li class="{% if request.resolver_match.url_name == 'hotel_list' %}active{% endif %}"><a href="{% url 'hotel:hotel_list' %}">Hotels</a></li>
-                <li><a href="./about-us.html">About Us</a></li>
+                <li class="{% if request.resolver_match.url_name == 'about_view' %}active{% endif %}"><a href="{% url 'core:about_view' %}">About Us</a></li>
                 <li><a href="./pages.html">Pages</a>
                     <ul class="dropdown">
                         <li><a href="./room-details.html">Room Details</a></li>
@@ -71,8 +71,10 @@
                         <li><a href="#">Premium Room</a></li>
                     </ul>
                 </li>
-                <li><a href="./blog.html">News</a></li>
                 <li><a href="{% url 'core:contact_view' %}">Contact</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                {% endif %}
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -140,8 +142,9 @@
                                 <ul>
                                     <li class="{% if request.resolver_match.url_name == 'home_view' %}active{% endif %}"><a href="{% url 'core:home_view' %}">Home</a></li>
                                     <li class="{% if request.resolver_match.url_name == 'hotel_list' %}active{% endif %}"><a href="{% url 'hotel:hotel_list' %}">Hotels</a></li>
-                                    <li><a href="./about-us.html">About Us</a></li>
+                                    <li class="{% if request.resolver_match.url_name == 'about_view' %}active{% endif %}"><a href="{% url 'core:about_view' %}">About Us</a></li>
                                     <li class="{% if request.resolver_match.url_name == 'contact_view' %}active{% endif %}"><a href="{% url 'core:contact_view' %}">Contact</a></li>
+                                    <li><a href="{% url 'account_logout' %}">Logout</a></li>
                                     <li><a href="./pages.html">Pages</a>
                                         <ul class="dropdown">
                                             <li><a href="./room-details.html">Room Details</a></li>
