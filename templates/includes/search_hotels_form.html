@@ -1,0 +1,30 @@
+<form action="{% url 'hotel:check_available_hotels' %}" method="post">
+    {% csrf_token %}
+    <div class="check-date">
+        <label for="date-in">Check In:</label>
+        <input type="text" class="date-input" id="date-in" name="check-in">
+        <i class="icon_calendar"></i>
+    </div>
+    <div class="check-date">
+        <label for="date-out">Check Out:</label>
+        <input type="text" class="date-input" id="date-out" name="check-out">
+        <i class="icon_calendar"></i>
+    </div>
+    <div class="select-option">
+        <label for="guest">City:</label>
+        <select id="guest" name="city">
+            <option value="tehran">Tehran</option>
+            <option value="shirax">Shiraz</option>
+            <option value="esfahan">Esfahan</option>
+            <option value="mashahd">Mashahd</option>
+        </select>
+    </div>
+    <div class="select-option">
+        <label for="room">Room:</label>
+        <select id="room" name="room">
+            <option value="1">1 Room</option>
+            <option value="2">2 Room</option>
+        </select>
+    </div>
+    <button type="submit">Check Availability</button>
+</form>

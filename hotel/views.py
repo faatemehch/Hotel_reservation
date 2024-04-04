@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
+from django.http import HttpResponse
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
@@ -42,3 +43,16 @@ class HotelDetailView(FormMixin, DetailView):
         review.hotel = self.object
         review.save()
         return super().form_valid(form)
+
+def check_available_hotels(request):
+    if request.method == 'POST':
+        city = request.POST['city']
+        check_in_date = request.POST['check-in']
+        check_out_date = request.POST['check-out']
+        hotels = Hotel.objects.filter(city=city, is_active=True)
+        print(hotels)
+        context = {
+            'hotels':hotels
+        }
+        return render(request, 'hotel/hotel_list.html', context)
+    return HttpResponse("Test")

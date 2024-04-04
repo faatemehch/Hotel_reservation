@@ -24,6 +24,7 @@ class Hotel(models.Model):
     image = models.ImageField(upload_to=upload_image_path)
     phone_number = models.CharField(max_length=64)
     email = models.EmailField(unique=True)
+    city = models.CharField(default='tehran', max_length=64)
     address = models.CharField(max_length=255)
     description = RichTextField()
     additional_info = RichTextField()
@@ -42,7 +43,9 @@ class Hotel(models.Model):
 
     def hotel_total_rate(self):
         reviews = self.review_set
-        return sum(review.customer_rate for review in reviews.all()) / reviews.count()
+        if reviews:
+            return sum(review.customer_rate for review in reviews.all()) / reviews.count()
+        return 0
 
 
 class Room(models.Model):
