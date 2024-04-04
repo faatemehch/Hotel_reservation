@@ -21,3 +21,6 @@ class AboutView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = "About Us"
         return context
+
+class ProfileView(TemplateView):
+    template_name = 'account/profile.html'
