@@ -1,0 +1,27 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+Logout
+{% endblock %}
+
+{% block content %}
+ <!-- Breadcrumb Section Begin -->
+ {% include 'includes/breadcrumb_section.html' with name='Logout' title="Logout" %}
+ <!-- Breadcrumb Section End -->
+
+ <div class="container">
+    <div class="row">
+        <div class="col-lg-4 offset-lg-3 mb-5">
+            <form action="#" class="contact-form" method="post">
+                {% csrf_token %}
+                    <!-- {{ form }} -->
+                <div class="col-lg-12 m-5">
+                    <h4>Are you sure?</h4>
+                    <input type="submit" value="Yes, I'm sure"?>
+                </div>
+            </form>
+         </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
