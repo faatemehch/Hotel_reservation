@@ -64,7 +64,7 @@ class Room(models.Model):
     modiefied_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.room_type
+        return f"{self.hotel.name} - {self.room_type}"
 
 
 class Review(models.Model):
@@ -97,8 +97,8 @@ class Reservation(models.Model):
     status = models.CharField(
         max_length=1, choices=RESERVATION_STATUS, default=RESERVATION_STATUS[1][0])
 
-    check_in_date = models.DateTimeField()
-    check_out_date = models.DateTimeField()
+    check_in_date = models.DateField()
+    check_out_date = models.DateField()
 
     is_check_in = models.BooleanField(default=False)
     is_check_out = models.BooleanField(default=False)

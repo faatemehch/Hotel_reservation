@@ -1,13 +1,13 @@
-<form action="{% url 'hotel:check_available_hotels' %}" method="post">
-    {% csrf_token %}
+<form action="{% url 'hotel:check_available_hotels' %}" method="get">
+    <!-- {% csrf_token %} -->
     <div class="check-date">
         <label for="date-in">Check In:</label>
-        <input type="text" class="date-input" id="date-in" name="check-in">
+        <input type="date" id="date-in" name="check-in">
         <i class="icon_calendar"></i>
     </div>
     <div class="check-date">
         <label for="date-out">Check Out:</label>
-        <input type="text" class="date-input" id="date-out" name="check-out">
+        <input type="date" id="date-out" name="check-out">
         <i class="icon_calendar"></i>
     </div>
     <div class="select-option">

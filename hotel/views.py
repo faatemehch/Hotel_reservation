@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
-from .models import Hotel
+from .models import Hotel, Room, Reservation
 from .forms import ReviewForm
+from django.db.models import Q
 
 
 class HotelListView(ListView):
@@ -27,7 +28,6 @@ class HotelDetailView(FormMixin, DetailView):
 
     def get_success_url(self):
         return reverse("hotel:hotel_detail", kwargs={"slug": self.object.slug})
-    
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -44,15 +44,26 @@ class HotelDetailView(FormMixin, DetailView):
         review.save()
         return super().form_valid(form)
 
+
 def check_available_hotels(request):
-    if request.method == 'POST':
-        city = request.POST['city']
-        check_in_date = request.POST['check-in']
-        check_out_date = request.POST['check-out']
-        hotels = Hotel.objects.filter(city=city, is_active=True)
-        print(hotels)
+    if request.method == 'GET':
+        city = request.GET.get('city')
+        check_in_date = request.GET.get('check-in')
+        check_out_date = request.GET.get('check-out')
+        # hotels = Hotel.objects.filter(city=city, is_active=True)
+        available_rooms = Room.objects.filter(
+            hotel__city=city, is_available=True)
+        booked_rooms = Reservation.objects.filter(
+            Q(check_in_date__lte=check_out_date, check_out_date__gt=check_in_date) |
+            Q(check_in_date__lt=check_in_date, check_out_date__gte=check_out_date)
+        )
+        available_rooms = available_rooms.exclude(id__in=booked_rooms)
+        
+
+        print(available_rooms)
         context = {
-            'hotels':hotels
+            "available_rooms" : available_rooms,
+
         }
-        return render(request, 'hotel/hotel_list.html', context)
+        return render(request, 'hotel/search_result.html', context)
     return HttpResponse("Test")
