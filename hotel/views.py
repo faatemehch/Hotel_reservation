@@ -24,7 +24,7 @@ class HotelDetailView(FormMixin, DetailView):
     model = Hotel
     template_name = 'hotel/hotel_detail.html'
     form_class = ReviewForm
-    queryset = Hotel.objects.prefetch_related('room_set', 'review_set')
+    queryset = Hotel.objects.prefetch_related('room_set', 'review_set', 'tags')
 
     def get_success_url(self):
         return reverse("hotel:hotel_detail", kwargs={"slug": self.object.slug})
@@ -51,13 +51,13 @@ def check_available_hotels(request):
         check_in_date = request.GET.get('check-in')
         check_out_date = request.GET.get('check-out')
         # hotels = Hotel.objects.filter(city=city, is_active=True)
-        available_rooms = Room.objects.filter(
-            hotel__city=city, is_available=True)
         booked_rooms = Reservation.objects.filter(
             Q(check_in_date__lte=check_out_date, check_out_date__gt=check_in_date) |
-            Q(check_in_date__lt=check_in_date, check_out_date__gte=check_out_date)
+            Q(check_in_date__lt=check_in_date, check_out_date__gte=check_out_date) &
+            Q(status='p')
         )
-        available_rooms = available_rooms.exclude(id__in=booked_rooms)
+        available_rooms = Room.objects.select_related('hotel').filter(
+            hotel__city=city, is_available=True).exclude(id__in=booked_rooms)
         
 
         print(available_rooms)
